@@ -1,3 +1,2 @@
-# Machine learning
-
-Disciplina de machine learning
+# active-handout-template
+Starter repository for Active Handout
