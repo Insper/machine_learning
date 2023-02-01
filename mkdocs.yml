@@ -1,0 +1,6 @@
+INHERIT: "active-handout.yml"
+
+site_name: "Site name here"
+
+nav:
+  - index.md
