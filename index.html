@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
       
-        <title>Site name here</title>
+        <title>Machine Learning</title>
       
     
     <link rel="stylesheet"
@@ -61,10 +61,10 @@
 </svg>
         </button>
         <a href="."
-           title="Site name here"
+           title="Machine Learning"
            class="ah-logo"
-           aria-label="Site name here">
-          Site name here
+           aria-label="Machine Learning">
+          Machine Learning
         </a>
         <div class="ah-header--right">
           
@@ -94,27 +94,11 @@
               
   
     <li class="active ah-togglable-item opened">
-      <span class="ah-togglable-handle">Exploratory Data Analysis</span>
+      <span class="ah-togglable-handle">Lectures</span>
       <ul>
         
           <li class="ah-toc-item">
-            <a href="#exploratory-data-analysis">Exploratory Data Analysis</a>
-          </li>
-          
-          <li class="ah-toc-item">
-            <a href="#think-about-the-problem">Think about the problem</a>
-          </li>
-          
-          <li class="ah-toc-item">
-            <a href="#prepare-your-workspace">Prepare your workspace</a>
-          </li>
-          
-          <li class="ah-toc-item">
-            <a href="#obtaining-the-data">Obtaining the data</a>
-          </li>
-          
-          <li class="ah-toc-item">
-            <a href="#analyzing-the-data">Analyzing the data</a>
+            <a href="#lectures">Lectures</a>
           </li>
           
         
@@ -132,69 +116,14 @@
             <ul class="ah-breadcrumbs">
               
                 
-                <li>Exploratory Data Analysis</li>
+                <li>Lectures</li>
             </ul>
             
             
           </div>
           <section class="progress-section show">
-<h1 id="exploratory-data-analysis">Exploratory Data Analysis</h1>
-<h2 id="think-about-the-problem">Think about the problem</h2>
-<p>Context: <a href="https://www.openintro.org/book/statdata/?data=ames">https://www.openintro.org/book/statdata/?data=ames</a></p>
-<p>Read the page, download the paper, skim the paper and read what's relevant.</p>
-<p>FAQ:</p>
-<ul>
-<li>
-<p>Professor, the link to the paper is not working!</p>
-<ul>
-<li>Did you know that some bird species teach their young to fly simply by pushing them from the nest? Not true, but there is a message there anyway.</li>
-</ul>
-</li>
-</ul>
-<p>Observations:</p>
-<ul>
-<li>Write your observations as you go, always!</li>
-</ul>
-<p>Let's think:</p>
-<ul>
-<li>
-<p>What are the questions that the client would like to answer?</p>
-</li>
-<li>
-<p>What data would you like to have available, ideally, to answer these questions? </p>
-<ul>
-<li>
-<p>Think about the different variables you would like to have measured for you, and also the possible conditions that could affect the experiment. </p>
-<ul>
-<li>For instance: is it reasonable to mix economic data from before and during the pandemic? </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Also think about the quality of the data for each variable - what does an unbiased data look like? </p>
-<ul>
-<li>Think of things like coverage, measurement error, etc.</li>
-</ul>
-</li>
-</ul>
-<h2 id="prepare-your-workspace">Prepare your workspace</h2>
-<p>Let's organize our workspace. Create a folder for your project and initialize a <code>git</code> repository there. The simplest way to do it is to write the command</p>
-<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>init
-</code></pre></div>
-<p>in your project folder. Or, equally simple, is to create a reposotory on github and clone it to your machine. From now on I'll assume that you are a git ace, that git is  second-nature to you. Go <a href="https://www.w3schools.com/git/">https://www.w3schools.com/git/</a> and have fun!</p>
-<p>We will be developing in Python in this project. Download the file from <a href="https://github.com/github/gitignore/blob/main/Python.gitignore">https://github.com/github/gitignore/blob/main/Python.gitignore</a> into your project folder and rename it to <code>.gitignore</code> simply. This file contains specifications for filenames that must be ignored by <code>git</code> (so that we don't commit things like <code>__pycache__</code> directories, etc).</p>
-<p>We will use virtual environments to better handle dependencies in Python. You can use <code>virtualenv</code> or <code>conda</code> (from the Anaconda distribution). I prefer <code>conda</code>. Also, let's use Python 3.10. In order to manage the installed packages we will use <code>Poetry</code> (<a href="https://python-poetry.org/">https://python-poetry.org/</a>). <code>Poetry</code> reads the specification of which packages are required from a <code>pyproject.toml</code> file in the project's root folder. You can create an initial <code>pyproject.toml</code> file running the command</p>
-<p><div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>poetry<span class="w"> </span>init
-</code></pre></div>
-and answering some questions.</p>
-<p>Make a README.md file in your project folder to keep your general information about the project (if you went the <code>github</code> cloning route you already have this file). For now the file will have little content, maybe only the project name.</p>
-<p>Make a <code>docs</code> folder. Make a <code>notes.md</code> file there to place your annotations. Write your answers from the previous section there! Commit your changes.</p>
-<h2 id="obtaining-the-data">Obtaining the data</h2>
-<p>Make a <code>data</code> folder, and a <code>raw</code> subfolder. Download the Ames dataset into this last subfolder.</p>
-<p>Edit the .gitignore file and add a line with <code>data/</code> in it, so that we won't commit our datasets.</p>
-<h2 id="analyzing-the-data">Analyzing the data</h2>
-<p>Create a <code>notebooks</code> folder and an <code>experiment.ipynb</code> notebook there.</p>
+<h1 id="lectures">Lectures</h1>
+<p><a href="AnaliseExploratoria/analise_exploratoria/">Aula 1 - Análise Exploratória</a></p>
 
 
 </section>

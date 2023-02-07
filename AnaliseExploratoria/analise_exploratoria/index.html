@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Exploratory Data Analysis - Machine Learning</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    
+    
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../.."
+           title="Machine Learning"
+           class="ah-logo"
+           aria-label="Machine Learning">
+          Machine Learning
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../..">Lectures</a>
+    </li>
+  
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li>Exploratory Data Analysis</li>
+            </ul>
+            
+            
+          </div>
+          <section class="progress-section show">
+<h1 id="exploratory-data-analysis">Exploratory Data Analysis</h1>
+<h2 id="think-about-the-problem">Think about the problem</h2>
+<p>Context: <a href="https://www.openintro.org/book/statdata/?data=ames">the Ames Residential Home Sales</a>.</p>
+<p>Read the page, download the paper, skim the paper and read what's relevant.</p>
+<p>FAQ:</p>
+<ul>
+<li>
+<p>Professor, the link to the paper is not working!</p>
+<ul>
+<li>Did you know that some bird species teach their young to fly simply by pushing them from the nest? Not true, but there is a message there anyway.</li>
+</ul>
+</li>
+</ul>
+<p>Observations:</p>
+<ul>
+<li>Write your observations as you go, always!</li>
+</ul>
+<p>Let's think:</p>
+<ul>
+<li>
+<p>What are the questions that the client would like to answer?</p>
+</li>
+<li>
+<p>Is the question a predictive or inferential one?</p>
+<ul>
+<li>
+<p>In Machine Learning, most of the time the goal is to construct a prediction for a target variable from the given features</p>
+</li>
+<li>
+<p>Inference analysis in statistics is concerned with measuring the size of the effect of the independent variables (the features) onto the dependent variable (the target), and whether the measured effect is statistically significant.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>What data would you like to have available, ideally, to answer these questions? </p>
+<ul>
+<li>
+<p>Think about the different variables you would like to have measured for you, and also the possible conditions that could affect the experiment. </p>
+<ul>
+<li>For instance: is it reasonable to mix economic data from before and during the pandemic? </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Also think about the quality of the data for each variable - what does an unbiased data look like? </p>
+<ul>
+<li>Think of things like coverage, measurement error, limitations, etc.</li>
+</ul>
+</li>
+</ul>
+<h2 id="prepare-your-workspace">Prepare your workspace</h2>
+<h3 id="software-version-control">Software version control</h3>
+<p>Let's organize our workspace. Create a folder for your project and initialize a <code>git</code> repository there. The simplest way to do it is to write the command</p>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>init
+</code></pre></div>
+<p>in your project folder. Or, equally simple, is to create a repository on github and clone it to your machine. From now on I'll assume that you are a git ace, that git is  second-nature to you. Go <a href="https://www.w3schools.com/git/">forth</a> and have fun!</p>
+<p>We will be developing in Python in this project. Download the file from <a href="https://github.com/github/gitignore/blob/main/Python.gitignore">here</a> into your project folder and rename it to <code>.gitignore</code> simply. This file contains specifications for filenames that must be ignored by <code>git</code> (so that we don't commit things like <code>__pycache__</code> directories, secrets, etc).</p>
+<h3 id="virtual-environment">Virtual environment</h3>
+<p>We will use virtual environments to better handle dependencies in Python. You can use <code>virtualenv</code> or <code>conda</code> (from the Anaconda distribution). I prefer <code>conda</code>. Also, let's use Python 3.10. You can get a Conda environment named <code>ames</code> going with the following commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>ames<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>conda<span class="w"> </span>activate<span class="w"> </span>ames
+</code></pre></div>
+<h3 id="package-management">Package management</h3>
+<p>In order to manage the installed packages we will use <a href="https://python-poetry.org/">Poetry</a>. </p>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>poetry
+</code></pre></div>
+<p>This tool reads the specification of which packages are required from a <code>pyproject.toml</code> file in the project's root folder. You can create an initial <code>pyproject.toml</code> file running the command</p>
+<p><div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>poetry<span class="w"> </span>init
+</code></pre></div>
+and answering some questions. From now on: whenever we need to install a package in our project we must do it using the <code>poetry add &lt;package name&gt;</code>. For instance, if we want to install <code>numpy</code>, then we run <code>poetry add numpy</code>. After, run <code>poetry install</code> to get the packages actually installed.</p>
+<h3 id="directory-structure">Directory structure</h3>
+<p>Make a README.md file in your project folder to keep your general information about the project (if you went the <code>github</code> cloning route you already have this file). For now the file will have little content, maybe only the project name.</p>
+<p>Make a <code>docs</code> folder. Make a <code>notes.md</code> file there to place your annotations. Write your answers from the previous section there! Commit your changes.</p>
+<h2 id="obtaining-the-data">Obtaining the data</h2>
+<p>Make a <code>data</code> folder, and a <code>raw</code> subfolder. Download the Ames dataset into this last subfolder.</p>
+<p>Edit the <code>.gitignore</code> file and add a line with <code>data/</code> in it, so that we won't commit our datasets.</p>
+<h2 id="analyzing-the-data">Analyzing the data</h2>
+<p>First analysis of the data, and quite an obvious one, is to check whether the file was downloaded properly. Check the location of the download and take note of the size of the file. It must be reasonable: not zero, nor several gigabytes (unless you were expecting it).</p>
+<p>In regards to the size of the file, compare with the size of the RAM in your system. If the data fits comfortably in RAM, you are good to go with tools like <a href="https://pandas.pydata.org/">Pandas</a> and <a href="https://scikit-learn.org/">Scikit-Learn</a>. For data that approaches or exceeds in size the capacity of your RAM, you may consider tools like <a href="https://www.dask.org/">Dask</a> (like Pandas but for large data). For really large data (the so-called Big Data), which may not even fit on a single hard disk, you will need bigger tools, like <a href="https://spark.apache.org/">Spark</a> running on a cloud cluster.</p>
+<p>Our present needs are modest, so let's go with the usual toolchain for the vast majority of use-cases.</p>
+<p>We now need the packages for analyzing the data, starting with Jupyter notebooks:</p>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>poetry<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>matplotlib<span class="w"> </span>pandas
+</code></pre></div>
+<p>Create a <code>notebooks</code> folder and an <code>experiment.ipynb</code> notebook there. Open it up. Read the data - here is a code snippet to help:</p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">pathlib</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s1">&#39;data&#39;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s1">&#39;raw&#39;</span> <span class="o">/</span> <span class="s1">&#39;ames.csv&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Now we are ready to proceed with our analysis.</p>
+<h3 id="level-0-analysis">Level 0 analysis</h3>
+<ul>
+<li>Sanity checks<ul>
+<li>size of data, checking a few samples</li>
+</ul>
+</li>
+<li>First contact with the content<ul>
+<li>what are the columns, what do they mean</li>
+<li>what is the datatype of each column. Which columns represent continuous variables, ordinal variables (discrete ordered categorical data), and categorical variables (discrete nominal data without order definition)?</li>
+<li>How many missing values each column has?</li>
+</ul>
+</li>
+</ul>
+<h3 id="level-1-analysis">Level 1 analysis</h3>
+<ul>
+<li>Analyzing columns individually<ul>
+<li>Analyze categorical variables<ul>
+<li>How many categories? Are they balanced?</li>
+<li>Bar plots</li>
+</ul>
+</li>
+<li>Analyze ordinal variables<ul>
+<li>Just like categorical variables, analyze how many categories exist and whether they are balanced. </li>
+<li>Are the "categories" a sequence of low-value positive integers, or are they actually a continuous variable disguised as an ordinal variable (that is, something that should have been of a floating-point type rather than an integer type)?</li>
+<li>Stem plots of grouped data are useful here</li>
+</ul>
+</li>
+<li>Analyze continuous variables<ul>
+<li>Histograms may be very useful, but be careful to choose an adequate number of bins. A rule of thumb is to use the square root of the number of data points</li>
+<li>Box plots permit the rapid visualization of important quantiles and the existence of outliers</li>
+<li>Are there anomalies?<ul>
+<li>Outliers</li>
+<li>Saturation</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="level-2-analysis">Level 2 analysis</h3>
+<ul>
+<li>Analyze columns jointly<ul>
+<li>Continuous versus continuous<ul>
+<li>Correlation (Pearson, Spearman, Kendall)</li>
+<li>Scatter plots</li>
+</ul>
+</li>
+<li>Continuous versus discrete (ordinal or categorical)<ul>
+<li>Group continuous values by the discrete variable and make box-plots</li>
+</ul>
+</li>
+<li>Discrete versus discrete variables<ul>
+<li>Cross-tables</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Analyze target versus feature<ul>
+<li>For continuous targets, we have a regression problem</li>
+<li>For categorical targets, we have a classification problem</li>
+<li>Apply the rules for joint variable analysis shown before</li>
+</ul>
+</li>
+<li>Look for strong variable associations, they may indicate redundancy. Be especially concerned about strong associations between a feature and the target: a good association is welcome (means we have a good feature) but an extremely good association may signify that a given feature is actually the target in disguise - then what is the point of constructing a predictive model? Like trying to predict the price of a house in dollars given its price in euros and the exchange rate.</li>
+</ul>
+
+
+</section>
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      
+    
+  </body>
+</html>
