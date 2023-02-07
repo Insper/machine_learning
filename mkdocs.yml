@@ -1,6 +1,6 @@
 INHERIT: "active-handout.yml"
 
-site_name: "Site name here"
+site_name: "Machine Learning"
 
 nav:
   - index.md
