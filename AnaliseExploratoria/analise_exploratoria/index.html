@@ -120,10 +120,12 @@
 <p>Read the page, download the paper, skim the paper and read what's relevant.</p>
 <p>FAQ:</p>
 <ul>
-<li>
-<p>Professor, the link to the paper is not working!</p>
-<ul>
+<li>Professor, the link to the paper is not working!<ul>
 <li>Did you know that some bird species teach their young to fly simply by pushing them from the nest? Not true, but there is a message there anyway.</li>
+</ul>
+</li>
+<li>Professor, the link to the data description within the paper is broken!<ul>
+<li>Ok, this one I agree, it is a pain, it took me some time to find it too. Here it is: <a href="https://jse.amstat.org/v19n3/decock/DataDocumentation.txt">DataDocumentation.txt</a>.</li>
 </ul>
 </li>
 </ul>
@@ -137,22 +139,19 @@
 <p>What are the questions that the client would like to answer?</p>
 </li>
 <li>
+<p>Are there official guidelines for this particular problem? Answer: yes - real estate is highly standardized, and there are guidelines for how a house appraisal must be conducted. This could serve both as a hint of what is important in this problem, and also as a baseline of predictive performance. Even more: discrepancies between an appraisal by official methodologies and the real sale prices may indicate opportunities where a better model may bring a sales advantage!</p>
+</li>
+<li>
 <p>Is the question a predictive or inferential one?</p>
 <ul>
-<li>
-<p>In Machine Learning, most of the time the goal is to construct a prediction for a target variable from the given features</p>
-</li>
-<li>
-<p>Inference analysis in statistics is concerned with measuring the size of the effect of the independent variables (the features) onto the dependent variable (the target), and whether the measured effect is statistically significant.</p>
-</li>
+<li>In Machine Learning, most of the time the goal is to construct a prediction for a target variable from the given features</li>
+<li>Inference analysis in statistics is concerned with measuring the size of the effect of the independent variables (the features) onto the dependent variable (the target), and whether the measured effect is statistically significant.</li>
 </ul>
 </li>
 <li>
 <p>What data would you like to have available, ideally, to answer these questions? </p>
 <ul>
-<li>
-<p>Think about the different variables you would like to have measured for you, and also the possible conditions that could affect the experiment. </p>
-<ul>
+<li>Think about the different variables you would like to have measured for you, and also the possible conditions that could affect the experiment. <ul>
 <li>For instance: is it reasonable to mix economic data from before and during the pandemic? </li>
 </ul>
 </li>
@@ -171,7 +170,7 @@
 <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>init
 </code></pre></div>
 <p>in your project folder. Or, equally simple, is to create a repository on github and clone it to your machine. From now on I'll assume that you are a git ace, that git is  second-nature to you. Go <a href="https://www.w3schools.com/git/">forth</a> and have fun!</p>
-<p>We will be developing in Python in this project. Download the file from <a href="https://github.com/github/gitignore/blob/main/Python.gitignore">here</a> into your project folder and rename it to <code>.gitignore</code> simply. This file contains specifications for filenames that must be ignored by <code>git</code> (so that we don't commit things like <code>__pycache__</code> directories, secrets, etc).</p>
+<p>We will be developing in Python in this project. Download the file from <a href="https://github.com/github/gitignore/blob/main/Python.gitignore">here</a> into your project's root folder and rename it to <code>.gitignore</code> simply. This file contains specifications for filenames that must be ignored by <code>git</code> (so that we don't commit things like <code>__pycache__</code> directories, secrets, etc).</p>
 <h3 id="virtual-environment">Virtual environment</h3>
 <p>We will use virtual environments to better handle dependencies in Python. You can use <code>virtualenv</code> or <code>conda</code> (from the Anaconda distribution). I prefer <code>conda</code>. Also, let's use Python 3.10. You can get a Conda environment named <code>ames</code> going with the following commands:</p>
 <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>ames<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10
@@ -187,16 +186,16 @@
 and answering some questions. From now on: whenever we need to install a package in our project we must do it using the <code>poetry add &lt;package name&gt;</code>. For instance, if we want to install <code>numpy</code>, then we run <code>poetry add numpy</code>. After, run <code>poetry install</code> to get the packages actually installed.</p>
 <h3 id="directory-structure">Directory structure</h3>
 <p>Make a README.md file in your project folder to keep your general information about the project (if you went the <code>github</code> cloning route you already have this file). For now the file will have little content, maybe only the project name.</p>
-<p>Make a <code>docs</code> folder. Make a <code>notes.md</code> file there to place your annotations. Write your answers from the previous section there! Commit your changes.</p>
+<p>Make a <code>docs</code> folder. Make a <code>notes.md</code> file there to place your annotations. Write your answers from the previous section there! Also copy the paper and the <code>DataDocumentation.txt</code> file there. Commit your changes.</p>
 <h2 id="obtaining-the-data">Obtaining the data</h2>
 <p>Make a <code>data</code> folder, and a <code>raw</code> subfolder. Download the Ames dataset into this last subfolder.</p>
 <p>Edit the <code>.gitignore</code> file and add a line with <code>data/</code> in it, so that we won't commit our datasets.</p>
 <h2 id="analyzing-the-data">Analyzing the data</h2>
-<p>First analysis of the data, and quite an obvious one, is to check whether the file was downloaded properly. Check the location of the download and take note of the size of the file. It must be reasonable: not zero, nor several gigabytes (unless you were expecting it).</p>
-<p>In regards to the size of the file, compare with the size of the RAM in your system. If the data fits comfortably in RAM, you are good to go with tools like <a href="https://pandas.pydata.org/">Pandas</a> and <a href="https://scikit-learn.org/">Scikit-Learn</a>. For data that approaches or exceeds in size the capacity of your RAM, you may consider tools like <a href="https://www.dask.org/">Dask</a> (like Pandas but for large data). For really large data (the so-called Big Data), which may not even fit on a single hard disk, you will need bigger tools, like <a href="https://spark.apache.org/">Spark</a> running on a cloud cluster.</p>
-<p>Our present needs are modest, so let's go with the usual toolchain for the vast majority of use-cases.</p>
+<p>First analysis of the data, and quite an obvious one, is to check whether the file was downloaded properly. Check the file and take note of its size. It must be reasonable: not zero, nor several gigabytes (unless you were expecting it).</p>
+<p>In regards to the size of the file, compare with the size of the RAM in your system. If the data fits comfortably in RAM, you are good to go with tools like <a href="https://pandas.pydata.org/">Pandas</a> and <a href="https://scikit-learn.org/">Scikit-Learn</a>. For data that approaches or exceeds in size the capacity of your RAM, you may consider tools such as <a href="https://www.dask.org/">Dask</a> (like Pandas but for large data). For really large data (the so-called Big Data), which may not even fit on a single disk, you will need bigger tools, like <a href="https://spark.apache.org/">Spark</a> running on a cloud cluster.</p>
+<p>Our present needs are modest, so let's go with the usual toolchain for the majority of use-cases.</p>
 <p>We now need the packages for analyzing the data, starting with Jupyter notebooks:</p>
-<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>poetry<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>matplotlib<span class="w"> </span>pandas
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>poetry<span class="w"> </span>add<span class="w"> </span>jupyterlab<span class="w"> </span>matplotlib<span class="w"> </span>pandas
 </code></pre></div>
 <p>Create a <code>notebooks</code> folder and an <code>experiment.ipynb</code> notebook there. Open it up. Read the data - here is a code snippet to help:</p>
 <div class="language-python highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">pathlib</span>
@@ -206,16 +205,16 @@ and answering some questions. From now on: whenever we need to install a package
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s1">&#39;raw&#39;</span> <span class="o">/</span> <span class="s1">&#39;ames.csv&#39;</span><span class="p">)</span>
 </code></pre></div>
-<p>Now we are ready to proceed with our analysis.</p>
+<p>Now we are ready to proceed with our analysis. Lots of work ahead of us: the professor will alternate between demonstrating and discussing some of the points ahead, and allowing you to work on your own to practice.</p>
 <h3 id="level-0-analysis">Level 0 analysis</h3>
 <ul>
 <li>Sanity checks<ul>
-<li>size of data, checking a few samples</li>
+<li>Size of data, checking a few samples</li>
 </ul>
 </li>
 <li>First contact with the content<ul>
-<li>what are the columns, what do they mean</li>
-<li>what is the datatype of each column. Which columns represent continuous variables, ordinal variables (discrete ordered categorical data), and categorical variables (discrete nominal data without order definition)?</li>
+<li>What are the columns, what do they mean</li>
+<li>What is the datatype of each column. Which columns represent continuous variables, ordinal variables (discrete ordered categorical data), and categorical variables (discrete nominal data without order definition)?</li>
 <li>How many missing values each column has?</li>
 </ul>
 </li>
@@ -232,16 +231,19 @@ and answering some questions. From now on: whenever we need to install a package
 <li>Just like categorical variables, analyze how many categories exist and whether they are balanced. </li>
 <li>Are the "categories" a sequence of low-value positive integers, or are they actually a continuous variable disguised as an ordinal variable (that is, something that should have been of a floating-point type rather than an integer type)?</li>
 <li>Stem plots of grouped data are useful here</li>
+<li>Go back and fix the data types for those discrete-but-actually-continuous variables</li>
 </ul>
 </li>
 <li>Analyze continuous variables<ul>
-<li>Histograms may be very useful, but be careful to choose an adequate number of bins. A rule of thumb is to use the square root of the number of data points</li>
-<li>Box plots permit the rapid visualization of important quantiles and the existence of outliers</li>
-<li>Are there anomalies?<ul>
-<li>Outliers</li>
-<li>Saturation</li>
+<li>Histograms may be very useful, but be careful to choose an adequate number of bins. A rule of thumb is to use the square root of the number of data points. Look for things like:<ul>
+<li>Asymmetry: do we have a one-sided long-tail, or is it symmetric?</li>
+<li>Multi-modal: do we have only one "hump" or several?</li>
+<li>Saturation: do we have a tall isolated "bar" at either end of the histogram?</li>
+<li>"Unnatural" histograms: chopped graphs (may indicate a discrete ordinal variable instead of a continuous one), uniform histograms (may indicate that we are seeing just a sequential numbering of data, like an index, instead of being real data), etc.</li>
+<li>Outliers: small bars far into the tail of the distribution</li>
 </ul>
 </li>
+<li>Box plots permit the rapid visualization of important quantiles and the existence of outliers</li>
 </ul>
 </li>
 </ul>
@@ -271,8 +273,23 @@ and answering some questions. From now on: whenever we need to install a package
 <li>Apply the rules for joint variable analysis shown before</li>
 </ul>
 </li>
-<li>Look for strong variable associations, they may indicate redundancy. Be especially concerned about strong associations between a feature and the target: a good association is welcome (means we have a good feature) but an extremely good association may signify that a given feature is actually the target in disguise - then what is the point of constructing a predictive model? Like trying to predict the price of a house in dollars given its price in euros and the exchange rate.</li>
+<li>Look for strong variable associations, they may indicate redundancy. Be especially concerned about strong associations between a feature and the target: a good association is welcome (means we have a good feature) but an <u>extremely</u> good association may signify that a given feature is actually the target in disguise - then what is the point of constructing a predictive model? Like trying to predict the price of a house in dollars if you already know its price in euros and the exchange rate.</li>
 </ul>
+<h1 id="next-steps">Next steps</h1>
+<ul>
+<li>Split the data into <em>train</em> and <em>test</em> sets. Use only the <em>train</em> dataset from now on, until done with improving the model.</li>
+<li>While improving:<ul>
+<li>Preprocessing the data</li>
+<li>Feature engineering</li>
+<li>Model selection</li>
+<li>Analysis of prediction results</li>
+<li>Decide whether we must continue improving</li>
+</ul>
+</li>
+<li>Once satisfied with the model, test its performance with the <em>test</em> dataset</li>
+<li>Decide whether to ship the model to production</li>
+</ul>
+<p>Stay tuned for more lectures!</p>
 
 
 </section>
