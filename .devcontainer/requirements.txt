@@ -1,0 +1,7 @@
+ipykernel
+ipython
+isort
+jupyter
+pylint
+pytest
+yapf
