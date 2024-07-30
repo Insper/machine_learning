@@ -19,6 +19,9 @@ RUN useradd -m $USERNAME \
 
 USER $USERNAME
 
+RUN git config --global user.email "fabioja@insper.edu.br"
+RUN git config --global user.name "Fabio Ayres"
+
 RUN mkdir /home/$USERNAME/$PROJECT_NAME
 RUN mkdir -p /home/$USERNAME/.local/bin
 
