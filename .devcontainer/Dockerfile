@@ -19,6 +19,8 @@ RUN useradd -m $USERNAME \
 
 USER $USERNAME
 
+RUN pip install --upgrade pip
+
 RUN git config --global user.email "fabioja@insper.edu.br"
 RUN git config --global user.name "Fabio Ayres"
 
