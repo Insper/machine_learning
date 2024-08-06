@@ -6,6 +6,11 @@ theme:
 docs_dir: content
 site_dir: docs
 
+extra:
+  custom_variables:
+    repo_aps: https://github.com/insper/machine_learning
+    repo_aps_git: https://github.com/insper/machine_learning.git
+
 extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
