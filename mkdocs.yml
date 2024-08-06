@@ -1,0 +1,16 @@
+INHERIT: active-handout.yml
+
+site_name: Machine Learning
+
+extra_javascript:
+  - js/tabs.js
+  - js/termynal.js
+  - js/custom.js
+
+extra_css:
+    - css/termynal.css
+
+nav:
+  - 'Home': index.md
+  - Content:
+    - modules/01-intro/intro.md
