@@ -13,4 +13,4 @@ extra_css:
 nav:
   - 'Home': index.md
   - Content:
-    - modules/01-intro/intro.md
+    - machine_learning_common/01-intro/intro.md
