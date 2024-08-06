@@ -1,0 +1,3 @@
+[submodule "content/modules"]
+	path = content/modules
+	url = git@github.com:Insper/machine_learning_common.git
