@@ -1,0 +1,10 @@
+ipython
+jupyterlab
+isort
+pylint
+yapf
+numpy
+scipy
+matplotlib
+pandas
+ipykernel
