@@ -6,5 +6,3 @@ Repositório da disciplina de machine learning.
 
 - Crie seu ambiente virtual favorito (conda, venv, etc)
 - `pip install -r requirements.txt`
-
-
