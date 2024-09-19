@@ -22,3 +22,12 @@ def load_data(data_dir=DATA_DIR):
     print(f'Loading data from {csv_file_path}')
     df = pd.read_csv(csv_file_path)
     return df
+
+
+def save_clean_data(df, data_dir=DATA_DIR):
+    df.to_parquet(data_dir / 'cleaned_data.parquet')
+
+
+def load_clean_data(data_dir=DATA_DIR):
+    df = pd.read_parquet(data_dir / 'cleaned_data.parquet')
+    return df
